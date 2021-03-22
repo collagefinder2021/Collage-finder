@@ -1,0 +1,408 @@
+	<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Collage Finder-Details</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename='info/images/icons/favicon.ico')}}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='info/vendor/bootstrap/css/bootstrap.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='info/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='info/vendor/animate/animate.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='info/vendor/css-hamburgers/hamburgers.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='info/vendor/select2/select2.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='info/css/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='info/css/main.css')}}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='info/css/mainsub.css')}}">
+	<style>
+        .alert {
+          padding: 20px;
+          background-color: #f44336;
+          color: white;
+          opacity: 1;
+          transition: opacity 0.6s;
+          margin-bottom: 15px;
+        }
+        
+        .alert.success {background-color: #4CAF50;}
+        .alert.info {background-color: #2196F3;}
+        .alert.warning {background-color: #ff9800;}
+        .alert{
+        display: none;
+        }
+        
+        
+        
+        </style>
+<!--===============================================================================================-->
+
+
+
+	<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+
+  
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
+
+	<script>
+		 var firebaseConfig = {
+        apiKey: "AIzaSyA6ZLUQ9ACBE2ALGpcUco0XGkBetdVRKgU",
+        authDomain: "collage-finder-5e58c.firebaseapp.com",
+        projectId: "collage-finder-5e58c",
+        storageBucket: "collage-finder-5e58c.appspot.com",
+        messagingSenderId: "30130002459",
+        appId: "1:30130002459:web:ff7669b9b59d2e6b9976be",
+        measurementId: "G-Q7J8LDE3BW"
+        };
+
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+		
+	</script>
+	<script>
+		var data = []
+		
+		function display(id) {
+        	document.getElementById(id).style.display = "block";
+    	}
+
+    	function clearspan(id) {
+        	document.getElementById(id).style.display = "none";
+    	}
+
+		function change(dis,c1,c2,a) {
+			clearspan("alert");
+			if(check(a)==false){
+				display("alert");
+			}else{
+			clearspan(c1);
+			clearspan(c2);
+			display(dis);
+			}
+		}
+
+		function DD() {
+			clearspan("alert");
+			if(check("ag") ==false){
+				display("alert");
+			}else
+			{
+				run1();
+				clearspan("Age");
+				display("bt");
+				// display("btwait");
+				
+			}
+		}
+		
+
+		function check(id) {
+			var c= document.getElementById(id).value;
+
+			if (c==""){
+				return false;
+			}
+		}
+
+		function run1() {
+			
+			firebase.auth().onAuthStateChanged(function(user) {
+				if (user) {
+					data=[]
+					var database = firebase.database();
+					var user1 = firebase.auth().currentUser.uid;
+					var name = document.getElementById("name").value;
+					var sub = document.getElementById("sub").value;
+					var ag = document.getElementById("ag").value;
+
+
+					firebase.database().ref(user1).set({
+					name: name,
+					subject: sub,
+					age : ag
+				});
+						
+					
+						
+
+
+
+					// firebase.database().ref('Users/' + user).set({
+					// 	Name:name,
+					// 	Subject:sub,
+					// 	Age:ag
+					// });
+					// window.location.pathname="/verify-email"
+						// data.push(name);
+						// data.push(sub);
+						// data.push(ag);
+
+						// var database = firebase.database();
+						// var ref = database.ref("Users/");
+						// ref.push(data);
+						// setTimeout(function delay1() {
+						// 	window.location.pathname ="/verify-email";
+						// },1000);
+						
+					
+						
+					
+				} else {
+					
+					console.log("Sing in");
+				}
+				});
+			
+				
+		}
+
+
+		// function getSub(){
+		// 	var sub =document.getElementById("subject").value;
+
+		// 	var data = {
+		// 		subject:sub
+		// 	}
+		// 	var database = firebase.database();
+		// 	var ref = database.ref("Users/");
+		// 	ref.push(data);
+		// 	alert("Done");
+		// }
+		const auth = firebase.auth();
+			auth.onAuthStateChanged(function(user){
+            
+            if (user){
+                
+                
+                
+                console.log("Complete info");
+                }
+                
+        
+            
+            else{
+        
+                console.log("No user");
+                window.location.pathname = '/login';
+        
+            }
+
+        });
+
+
+		function next11() {
+			window.location.pathname = '/verify-email';
+		}
+
+
+	</script>
+
+
+</head>
+<body>
+
+	<div class="contact1">
+
+			
+			<!-- <form action="#" class="contact1-form validate-form"> -->
+			<div class="contact1-form validate-form">
+				<div id="Name" style="display: block;">
+					<span class="contact1-form-title">
+						Enter Your Name
+					</span>
+	
+					<div class="wrap-input1 validate-input" data-validate = "Name is required">
+						<input id="name" class="input1" type="text" name="name" placeholder="Name">
+						<span class="shadow-input1"></span>
+					</div>
+	
+					
+	
+					<div class="container-contact1-form-btn">
+						<button onclick="change('Subject','Name','Age','name');" class="contact1-form-btn">
+							<span>
+								Next
+								<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+							</span>
+						</button>
+					</div>
+				</div>
+
+
+				<div id="Subject" style="display: none;">
+					<span class="contact1-form-title"style=>
+						Enter Your Subject
+					</span>
+					<style>
+						.dropbtn {
+						  background-color: #4CAF50;
+						  color: white;
+						  padding: 16px;
+						  font-size: 16px;
+						  border: none;
+						  cursor: pointer;
+						}
+						
+						.dropdown {
+						  position: relative;
+						  display: inline-block;
+						}
+						
+						.dropdown-content {
+						  display: none;
+						  position: absolute;
+						  background-color: #f9f9f9;
+						  min-width: 160px;
+						  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+						  z-index: 1;
+						}
+						
+						.dropdown-content a {
+						  color: black;
+						  padding: 12px 16px;
+						  text-decoration: none;
+						  display: block;
+						}
+						
+						.dropdown-content a:hover {background-color: #f1f1f1}
+						
+						.dropdown:hover .dropdown-content {
+						  display: block;
+						}
+						
+						.dropdown:hover .dropbtn {
+						  background-color: #3e8e41;
+						}
+						</style>
+					<script>
+						var default1 = "--select--";
+						document.getElementById("value").innerHTML = default1;
+						function changeE(a){
+							document.getElementById("sub").value =a;
+							document.getElementById("value").innerHTML = a;
+							
+						}
+						
+					</script>
+
+
+
+					<div class="wrap-input1 validate-input" data-validate = "Name is required">
+						<input style="display: none;" id="sub" class="input1" type="text" placeholder="Engineering...">
+						<div class="dropdown">
+							<button class="dropbtn"><span id="value">--select--</span></button>
+							<div class="dropdown-content">
+								<a href="javascript:changeE('E')">E</a>
+								<a href="javascript:changeE('D')">D</a>
+								<a href="javascript:changeE('B')">B</a>
+								<a href="javascript:changeE('MBA')">MBA</a>
+								<a href="javascript:changeE('P')">P</a>
+
+							
+							
+							</div>
+						  </div>
+						<span class="shadow-input1"></span>
+					</div>
+	
+					
+	
+					<div class="container-contact1-form-btn">
+						<button onclick="change('Age','Name','Subject','sub');" class="contact1-form-btn">
+							<span>
+								Next
+								<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+							</span>
+						</button>
+					</div>
+				</div>
+
+				<div id="Age" style="display: none;">
+					<span class="contact1-form-title"style=>
+						Enter Your Scored Marks in 12th
+					</span>
+	
+					<div class="wrap-input1 validate-input" data-validate = "Name is required">
+						<input id="ag" class="input1" type="text" placeholder="Marks(%)">
+						<span class="shadow-input1"></span>
+					</div>
+	
+					
+	
+					<div class="container-contact1-form-btn">
+						<button onclick="DD();" class="contact1-form-btn">
+							<span>
+								Next
+								<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+							</span>
+						</button>
+					</div>
+
+				</div>
+
+				<div id="bt" style="display: none;">
+					<span class="contact1-form-title"style=>
+						Click Next To Procede
+					</span>
+	
+					
+	
+					
+	
+					<div class="container-contact1-form-btn">
+						<button onclick="next11();" class="contact1-form-btn">
+							<span>
+								Next
+								<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+							</span>
+						</button>
+					</div>
+					
+				</div>
+				<div style="display: none;" id="btwait" style="display: none;">
+					<span class="contact1-form-title"style=>
+						Please Wait..
+					</span>
+					
+				</div>
+
+
+				<div style="padding-block: 11px;"></div>
+				<div id="alert" class="alert warning">
+                                        
+					<strong>Oho!</strong> Please Fill In Details.
+				  </div>
+				  <div id="alert1" class="alert success">
+                                        
+					<strong>Done!</strong> Your Details Have Been Stored.
+				  </div>
+			</div>
+			<!-- </form> -->
+			
+		<!-- </div> -->
+	</div>
+
+
+
+
+<!--===============================================================================================-->
+	
+<!--===============================================================================================-->
+	
+	
+<!--===============================================================================================-->
+	
+<!--===============================================================================================-->
+	
+
+</body>
+</html>

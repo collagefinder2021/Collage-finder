@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Skydash Admin</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/vendors/feather/feather.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/vendors/ti-icons/css/themify-icons.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/vendors/css/vendor.bundle.base.css')}}">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/vertical-layout-light/style.css')}}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{{ url_for('static', filename='dashboard/images/favicon.png')}}"" />
+</head>
+
+<script>
+  
+</script>
+<body>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+
+  
+     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
+
+    <script>
+      var firebaseConfig = {
+         apiKey: "AIzaSyA6ZLUQ9ACBE2ALGpcUco0XGkBetdVRKgU",
+         authDomain: "collage-finder-5e58c.firebaseapp.com",
+         projectId: "collage-finder-5e58c",
+         storageBucket: "collage-finder-5e58c.appspot.com",
+         messagingSenderId: "30130002459",
+         appId: "1:30130002459:web:ff7669b9b59d2e6b9976be",
+         measurementId: "G-Q7J8LDE3BW"
+        };
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        
+        var sub;
+
+    
+        
+  
+
+        const auth = firebase.auth();
+          
+          auth.onAuthStateChanged(function (user) {
+          var user = firebase.auth().currentUser.uid;
+          
+
+          firebase.database().ref(user).once("value").then(function (snapshot) {
+            
+            // var name = snapshot.val().name;
+            sub = snapshot.val().subject;
+            // var ag = snapshot.val().age;
+            
+            document.getElementById("in").value = sub;
+            var data11 = document.getElementById("in").value;
+            document.getElementById("wait").style.display ="none";
+            document.getElementById("bt").style.display ="block";
+          
+          })
+          
+          });
+          
+          // window.location.pathname = "/new";
+          
+        
+
+
+
+        
+
+
+        
+
+
+    </script>
+    <script>
+      function main() {
+        const auth = firebase.auth();
+    
+      auth.onAuthStateChanged(function(user){
+        
+        if (user){
+            var email = user.email;
+            var user = firebase.auth().currentUser;
+            
+            if (user.emailVerified) {
+                 // email is verified.
+                 console.log("Finish");
+                 
+            } else {
+                // email is not verified.
+                window.location.pathname = "/verify-email";
+                
+            }
+            
+    
+        }
+        else{
+    
+            console.log("No user");
+            
+            window.location.pathname = '/login';
+    
+        }
+    
+    });
+    
+      }
+      main();
+
+      function direct() {
+        // window.location.pathname = "/new"
+      }
+
+    </script>
+
+  <form action="#" method="POST">
+    <div class="container-scroller">
+      
+      <div class="container-fluid page-body-wrapper">
+        
+        
+        
+        <div class="card-body">
+                        
+          <!-- <button type="button" class="btn btn-inverse-info btn-fw">Info</button> -->
+            <div>
+              <h3 id="wait">Please Wait</h3>
+              <button type="submit" id="bt" style="display: none;" onclick="direct();" type="button" class="btn btn-inverse-info btn-fw">Finish</button>
+              <input style="display: none;" name="in" id="in" type="text">
+              <h1>{{data}}</h1>
+            </div>
+        </div>
+                    
+        </div>
+        
+      </div>
+      
+    </div>
+</form>
+
+  <script src="{{ url_for('static', filename='dashboard/vendors/js/vendor.bundle.base.js')}}"></script>
+
+  <script src="{{ url_for('static', filename='dashboard/js/off-canvas.js')}}"></script>
+  <script src="{{ url_for('static', filename='dashboard/js/hoverable-collapse.js')}}"></script>
+  <script src="{{ url_for('static', filename='dashboard/js/template.js')}}"></script>
+  <script src="{{ url_for('static', filename='dashboard/js/settings.js')}}"></script>
+  <script src="{{ url_for('static', filename='dashboard/js/todolist.js')}}"></script>
+
+</body>
+
+</html>

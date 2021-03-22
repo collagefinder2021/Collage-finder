@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>Dashboard</title>
+</head>
+<body>
+    <style>
+        body {
+          font-family: Arial;
+        }
+        
+        * {
+          box-sizing: border-box;
+        }
+        
+        form.example input[type=text] {
+          padding: 10px;
+          font-size: 17px;
+          border: 1px solid grey;
+          float: left;
+          width: 80%;
+          background: #f1f1f1;
+        }
+        
+        form.example button {
+          float: left;
+          width: 20%;
+          padding: 10px;
+          background: #2196F3;
+          color: white;
+          font-size: 17px;
+          border: 1px solid grey;
+          border-left: none;
+          cursor: pointer;
+        }
+        
+        form.example button:hover {
+          background: #0b7dda;
+        }
+        
+        form.example::after {
+          content: "";
+          clear: both;
+          display: table;
+        }
+        </style>
+
+     <!-- firebase -->
+
+     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+
+  
+     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+     <!-- <script src="{{ url_for('static', filename='js/firebase key.js')}}"></script>
+     <script src="{{ url_for('static', filename='js/sign up.js')}}"></script> -->
+     
+     
+    <script>
+        var firebaseConfig = {
+         apiKey: "AIzaSyA6ZLUQ9ACBE2ALGpcUco0XGkBetdVRKgU",
+         authDomain: "collage-finder-5e58c.firebaseapp.com",
+         projectId: "collage-finder-5e58c",
+         storageBucket: "collage-finder-5e58c.appspot.com",
+         messagingSenderId: "30130002459",
+         appId: "1:30130002459:web:ff7669b9b59d2e6b9976be",
+         measurementId: "G-Q7J8LDE3BW"
+        };
+ 
+ 
+         // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+
+
+        const auth = firebase.auth();
+
+        auth.onAuthStateChanged(function(user){
+
+            if (user){
+                var email = user.email;
+                var user = firebase.auth().currentUser;
+                if (user.emailVerified) {
+                     // email is verified.
+                     console.log("Verified!");
+                } else {
+                    // email is not verified.
+                    window.location.pathname = "/verify-email"
+                }
+                document.getElementById("User").innerHTML = email;
+                
+            }
+            else{
+                
+                window.location.pathname = "/login";
+            }
+
+        });
+
+
+
+        function signOut(){
+            const auth = firebase.auth();
+            auth.signOut();
+            console.log("Singed Out");
+            window.location.pathname ="/sign-up";
+        }
+
+
+
+
+    </script>
+         
+     <style>
+         
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+     </style>    
+
+
+
+
+    <H1>Dashboard</H1>
+    <h2>Welcome <span id="User"></span></h2>
+    <button onclick="signOut();">Log Out</button>
+    <input type="text" name="" id="in"placeholder="Name.." onkeyup="search();" >
+    <table id="customers">
+        <tr>
+            {% for header in headings %}
+
+          <th>{{header}}</th>
+          
+          
+          {% endfor %}
+        </tr>
+        {% for row in data %}
+
+        <tr>
+            {% for cell in row %}
+          <td>{{cell}}</td>
+          {% endfor %}
+          
+        </tr>
+        {% endfor %}
+      </table>
+    
+
+      <script>
+          const search = () =>{
+              let filter = document.getElementById("in").value;
+              let table =document.getElementById("customers");
+
+              let tr = table.getElementsByTagName('tr');
+
+
+              for(var i=0; i<tr.length; i++){
+                  let td = tr[i].getElementsByTagName('td')[0];
+
+                  if(td){
+                      let val = td.textContent || td.innerHTML;
+
+                      if(val.indexOf(filter) > -1){
+                          tr[1].style.display ="";
+
+                      }else{
+                          tr[i].style.display ="none";
+
+                      }
+                  }
+              }
+          }
+      </script>
+
+</body>
+</html>

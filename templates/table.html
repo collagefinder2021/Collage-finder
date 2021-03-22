@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Skydash Admin</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/vendors/feather/feather.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/vendors/ti-icons/css/themify-icons.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/vendors/css/vendor.bundle.base.css')}}">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/vendors/mdi/css/materialdesignicons.min.css')}}">
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/vertical-layout-light/style.css')}}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{{ url_for('static', filename='dashboard/images/favicon.png')}}" />
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/vendors/feather/feather.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/vendors/ti-icons/css/themify-icons.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/vendors/css/vendor.bundle.base.css')}}">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/vertical-layout-light/style.css')}}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{{ url_for('static', filename='dashboard/images/favicon.png')}}" />
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='info/images/icons/favicon.ico')}}"/>
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='info/vendor/bootstrap/css/bootstrap.min.css')}}">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='info/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='info/vendor/animate/animate.css')}}">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='info/vendor/css-hamburgers/hamburgers.min.css')}}">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='info/vendor/select2/select2.min.css')}}">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='info/css/util.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='info/css/main.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='info/css/mainsub.css')}}">
+    <style>
+      .alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        opacity: 1;
+        transition: opacity 0.6s;
+        margin-bottom: 15px;
+      }
+      
+      .alert.success {background-color: #4CAF50;}
+      .alert.info {background-color: #2196F3;}
+      .alert.warning {background-color: #ff9800;}
+      .alert{
+      display: none;
+      }
+      
+      
+      
+      </style>
+</head>
+
+<body>
+
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+
+  
+     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
+
+
+    <script>
+      var firebaseConfig = {
+         apiKey: "AIzaSyA6ZLUQ9ACBE2ALGpcUco0XGkBetdVRKgU",
+         authDomain: "collage-finder-5e58c.firebaseapp.com",
+         projectId: "collage-finder-5e58c",
+         storageBucket: "collage-finder-5e58c.appspot.com",
+         messagingSenderId: "30130002459",
+         appId: "1:30130002459:web:ff7669b9b59d2e6b9976be",
+         measurementId: "G-Q7J8LDE3BW"
+        };
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        const auth = firebase.auth();
+          
+          auth.onAuthStateChanged(function (user) {
+          var user = firebase.auth().currentUser.uid;
+          
+
+          firebase.database().ref(user).once("value").then(function (snapshot) {
+            
+            var name = snapshot.val().name;
+            // var sub = snapshot.val().subject;
+            // var ag = snapshot.val().age;
+            document.getElementById("lol").innerHTML = name;
+            
+          })
+          
+          });
+          
+
+        auth.onAuthStateChanged(function(user){
+
+            if (user){
+                var email = user.email;
+                var user = firebase.auth().currentUser;
+                if (user.emailVerified) {
+                     // email is verified.
+                     console.log("Verified!");
+                } else {
+                    // email is not verified.
+                    window.location.pathname = "/verify-email"
+                }
+                document.getElementById("User").innerHTML = email;
+                
+            }
+            else{
+                
+                window.location.pathname = "/login";
+            }
+
+        });
+        function signOut(){
+            const auth = firebase.auth();
+            auth.signOut();
+            console.log("Singed Out");
+            window.location.pathname ="/sign-up";
+        }
+          
+          
+    </script>
+
+<style>
+  
+  
+  .vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+  </style>
+
+<script>
+  function onclick() {
+    window.location.pathname = "/static/dashboard/pages/ui-features/buttons.html"
+  }
+  
+  
+</script>
+
+
+
+
+
+
+<div style="display: block;" id="main">
+  <div class="container-scroller">
+    
+    <!-- partial:dashboard/partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo mr-5" href="dashboard/index.html"><img src="{{ url_for('static', filename='dashboard/images/logo.svg')}}" class="mr-2" alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" href="dashboard/index.html"><img src="{{ url_for('static', filename='dashboard/images/logo-mini.svg')}}" alt="logo"/></a>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+          <span class="icon-menu"></span>
+        </button>
+        <ul class="navbar-nav mr-lg-2">
+          <!-- <li class="nav-item nav-search d-none d-lg-block">
+            <div class="input-group">
+              <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                <span class="input-group-text" id="search">
+                  <i class="icon-search"></i>
+                </span>
+              </div>
+              <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search"  onkeyup="search();">
+            </div>
+            
+            
+            
+          </li> -->
+        </ul>
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item dropdown">
+            
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-success">
+                    <i class="ti-info-alt mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    Just now
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-warning">
+                    <i class="ti-settings mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">Settings</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    Private message
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-info">
+                    <i class="ti-user mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    2 days ago
+                  </p>
+                </div>
+              </a>
+            </div>
+          </li>
+          <li class="nav-item nav-profile dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+              <img src="{{ url_for('static', filename='dashboard/images/faces/face28.jpg')}}" alt="profile"/>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+              
+              <a href="javascript:signOut();" class="dropdown-item">
+                <i  class="ti-power-off text-primary"></i>
+                
+                Logout
+              </a>
+            </div>
+          </li>
+
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="icon-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:dashboard/partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+        <div id="settings-trigger"><i class="ti-settings"></i></div>
+        <div id="theme-settings" class="settings-panel">
+          <i class="settings-close ti-close"></i>
+          <p class="settings-heading">SIDEBAR SKINS</p>
+          <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+          <p class="settings-heading mt-2">HEADER SKINS</p>
+          <div class="color-tiles mx-0 px-4">
+            <div class="tiles success"></div>
+            <div class="tiles warning"></div>
+            <div class="tiles danger"></div>
+            <div class="tiles info"></div>
+            <div class="tiles dark"></div>
+            <div class="tiles default"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- partial -->
+      <!-- partial:dashboard/partials/_sidebar.html -->
+      <script>
+        function display1() {
+          document.getElementById("Subject").style.display="block";
+          document.getElementById("MarksA").style.display="block";
+          document.getElementById("allA").style.display="block";
+          document.getElementById("mars_subA").style.display="block";
+          document.getElementById("Marks").style.display ="none";
+          document.getElementById("subA").style.display="none";
+          document.getElementById("m_s").style.display="none";
+          document.getElementById("all").style.display="none";
+          
+        }
+        function display2() {
+          document.getElementById("Subject").style.display="none";
+          document.getElementById("MarksA").style.display="none";
+          document.getElementById("m_s").style.display="none";
+          document.getElementById("all").style.display="none";
+          document.getElementById("Marks").style.display ="block";
+          document.getElementById("subA").style.display ="block";
+          document.getElementById("mars_subA").style.display ="block";
+          document.getElementById("allA").style.display ="block";
+        }
+        function display3() {
+          document.getElementById("m_s").style.display ="block";
+          document.getElementById("subA").style.display ="block";
+          document.getElementById("MarksA").style.display ="block";
+          document.getElementById("allA").style.display ="block";
+          document.getElementById("Subject").style.display ="none";
+          document.getElementById("Marks").style.display ="none";
+          document.getElementById("mars_subA").style.display ="none";
+          document.getElementById("all").style.display ="none";
+
+        }
+        function display4() {
+          document.getElementById("allA").style.display ="none";
+          document.getElementById("Subject").style.display ="none";
+          document.getElementById("Marks").style.display ="none";
+          document.getElementById("subA").style.display ="block";
+          document.getElementById("all").style.display ="block";
+          document.getElementById("mars_subA").style.display ="block";
+          document.getElementById("MarksA").style.display ="block";
+        }
+      </script>
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:display1();">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Based on {{sub}}</span>
+              <i style="display: none;"  id="subA" class="menu-arrow"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:display2();">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Based on Marks</span>
+              <i id="MarksA" class="menu-arrow"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:display3();">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Marks and Subject</span>
+              <i id="mars_subA" class="menu-arrow"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript: display4();">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">All</span>
+              <i id="allA" class="menu-arrow"></i>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+        </ul>
+      </nav>
+      <!-- partial -->
+      
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h2 class="font-weight-bold">Welcome <span id="lol"></span></h2>
+            
+            <!-- <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6> -->
+          </div>
+          <!-- <div class="row"> -->
+            <!-- <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Basic Table</h4>
+                  <p class="card-description">
+                    Add class <code>.table</code>
+                  </p>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Profile</th>
+                          <th>VatNo.</th>
+                          <th>Created</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Jacob</td>
+                          <td>53275531</td>
+                          <td>12 May 2017</td>
+                          <td><label class="badge badge-danger">Pending</label></td>
+                        </tr>
+                        <tr>
+                          <td>Messsy</td>
+                          <td>53275532</td>
+                          <td>15 May 2017</td>
+                          <td><label class="badge badge-warning">In progress</label></td>
+                        </tr>
+                        <tr>
+                          <td>John</td>
+                          <td>53275533</td>
+                          <td>14 May 2017</td>
+                          <td><label class="badge badge-info">Fixed</label></td>
+                        </tr>
+                        <tr>
+                          <td>Peter</td>
+                          <td>53275534</td>
+                          <td>16 May 2017</td>
+                          <td><label class="badge badge-success">Completed</label></td>
+                        </tr>
+                        <tr>
+                          <td>Dave</td>
+                          <td>53275535</td>
+                          <td>20 May 2017</td>
+                          <td><label class="badge badge-warning">In progress</label></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            <!-- <div class="col-lg-6 grid-margin stretch-card"> -->
+              <div id="Subject" class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Collages for {{sub}}</h4>
+                  <p class="card-description">
+                    <code>On Basis Of Subject</code>
+                  </p>
+                  <div class="table-responsive">
+                    <table id="customers" class="table table-hover">
+                      <thead>
+                        <tr>
+                          {% for header in headings %}
+                          <th>{{header}}</th>
+                          <!-- <th>User</th>
+                          <th>Product</th>
+                          <th>Sale</th>
+                          <th>Status</th> -->
+                          {% endfor %}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for row in data %}
+                        <tr>
+                          
+                          <td>{{row[0]}}</td>
+                          {% if row[1]>60 %}
+                              <td class="text-success">{{row[1]}}<i class="ti-arrow-up"></i></td>
+                            {% else %}
+                              <td class="text-danger">{{row[1]}}<i class="ti-arrow-down"></i></td>
+                            {% endif %}
+                          <td >{{row[2]}}</td>
+                          <td>{{row[3]}}</td>
+                          
+                            {% if row[4]>2 %}
+                              <td class="text-success">{{row[4]}}<i class="ti-arrow-up"></i></td>
+                            {% else %}
+                              <td class="text-danger">{{row[4]}}<i class="ti-arrow-down"></i></td>
+                            
+                            {% endif %}
+                            <td class="text-success">{{row[5]}}</td>
+                          <!-- <td>Jacob</td>
+                          <td>Photoshop</td>
+                          <td class="text-danger"> 28.76% <i class="ti-arrow-down"></i></td>
+                          <td><label class="badge badge-danger">Pending</label></td> -->
+                          
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                          <!-- <td>Messsy</td>
+                          <td>Flash</td>
+                          <td class="text-danger"> 21.06% <i class="ti-arrow-down"></i></td>
+                          <td><label class="badge badge-warning">In progress</label></td> -->
+                        </tr>
+                        <tr>
+                          <!-- <td>John</td>
+                          <td>Premier</td>
+                          <td class="text-danger"> 35.00% <i class="ti-arrow-down"></i></td>
+                          <td><label class="badge badge-info">Fixed</label></td> -->
+                        </tr>
+                        <tr>
+                          <!-- <td>Peter</td>
+                          <td>After effects</td>
+                          <td class="text-success"> 82.00% <i class="ti-arrow-up"></i></td>
+                          <td><label class="badge badge-success">Completed</label></td> -->
+                        </tr>
+                        <tr>
+                          <!-- <td>Dave</td>
+                          <td>53275535</td>
+                          <td class="text-success"> 98.05% <i class="ti-arrow-up"></i></td>
+                          <td><label class="badge badge-warning">In progress</label></td> -->
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div style="display: none;" id="Marks" class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Collages Based On Your Marks( {{mar}} )</h4>
+                  <p class="card-description">
+                    <code>On Basis Of Marks</code>
+                  </p>
+                  <div class="table-responsive">
+                    <table id="customers" class="table table-hover">
+                      <thead>
+                        <tr>
+                          {% for header in headings %}
+                          <th>{{header}}</th>
+                          <!-- <th>User</th>
+                          <th>Product</th>
+                          <th>Sale</th>
+                          <th>Status</th> -->
+                          {% endfor %}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for row in data_marks %}
+                        <tr>
+                          
+                          <td>{{row[0]}}</td>
+                          {% if row[1]>60 %}
+                              <td class="text-success">{{row[1]}}<i class="ti-arrow-up"></i></td>
+                            {% else %}
+                              <td class="text-danger">{{row[1]}}<i class="ti-arrow-down"></i></td>
+                            {% endif %}
+                          <td >{{row[2]}}</td>
+                          <td>{{row[3]}}</td>
+                          
+                            {% if row[4]>2 %}
+                              <td class="text-success">{{row[4]}}<i class="ti-arrow-up"></i></td>
+                            {% else %}
+                              <td class="text-danger">{{row[4]}}<i class="ti-arrow-down"></i></td>
+                            
+                            {% endif %}
+                            <td class="text-success">{{row[5]}}</td>
+                          <!-- <td>Jacob</td>
+                          <td>Photoshop</td>
+                          <td class="text-danger"> 28.76% <i class="ti-arrow-down"></i></td>
+                          <td><label class="badge badge-danger">Pending</label></td> -->
+                          
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                          <!-- <td>Messsy</td>
+                          <td>Flash</td>
+                          <td class="text-danger"> 21.06% <i class="ti-arrow-down"></i></td>
+                          <td><label class="badge badge-warning">In progress</label></td> -->
+                        </tr>
+                        <tr>
+                          <!-- <td>John</td>
+                          <td>Premier</td>
+                          <td class="text-danger"> 35.00% <i class="ti-arrow-down"></i></td>
+                          <td><label class="badge badge-info">Fixed</label></td> -->
+                        </tr>
+                        <tr>
+                          <!-- <td>Peter</td>
+                          <td>After effects</td>
+                          <td class="text-success"> 82.00% <i class="ti-arrow-up"></i></td>
+                          <td><label class="badge badge-success">Completed</label></td> -->
+                        </tr>
+                        <tr>
+                          <!-- <td>Dave</td>
+                          <td>53275535</td>
+                          <td class="text-success"> 98.05% <i class="ti-arrow-up"></i></td>
+                          <td><label class="badge badge-warning">In progress</label></td> -->
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: none;" id="all" class="card">
+                <div class="card-body">
+                  <h4 class="card-title">All Collages</h4>
+                  <p class="card-description">
+                    <code>All</code>
+                  </p>
+                  <div class="table-responsive">
+                    <table id="customers" class="table table-hover">
+                      <thead>
+                        <tr>
+                          {% for header in headings %}
+                          <th>{{header}}</th>
+                          <!-- <th>User</th>
+                          <th>Product</th>
+                          <th>Sale</th>
+                          <th>Status</th> -->
+                          {% endfor %}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for row in fulldata %}
+                        <tr>
+                          
+                          <td>{{row[0]}}</td>
+                          {% if row[1]>60 %}
+                              <td class="text-success">{{row[1]}}<i class="ti-arrow-up"></i></td>
+                            {% else %}
+                              <td class="text-danger">{{row[1]}}<i class="ti-arrow-down"></i></td>
+                            {% endif %}
+                          <td >{{row[2]}}</td>
+                          <td>{{row[3]}}</td>
+                          
+                            {% if row[4]>2 %}
+                              <td class="text-success">{{row[4]}}<i class="ti-arrow-up"></i></td>
+                            {% else %}
+                              <td class="text-danger">{{row[4]}}<i class="ti-arrow-down"></i></td>
+                            
+                            {% endif %}
+                            <td class="text-success">{{row[5]}}</td>
+                          <!-- <td>Jacob</td>
+                          <td>Photoshop</td>
+                          <td class="text-danger"> 28.76% <i class="ti-arrow-down"></i></td>
+                          <td><label class="badge badge-danger">Pending</label></td> -->
+                          
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                          <!-- <td>Messsy</td>
+                          <td>Flash</td>
+                          <td class="text-danger"> 21.06% <i class="ti-arrow-down"></i></td>
+                          <td><label class="badge badge-warning">In progress</label></td> -->
+                        </tr>
+                        <tr>
+                          <!-- <td>John</td>
+                          <td>Premier</td>
+                          <td class="text-danger"> 35.00% <i class="ti-arrow-down"></i></td>
+                          <td><label class="badge badge-info">Fixed</label></td> -->
+                        </tr>
+                        <tr>
+                          <!-- <td>Peter</td>
+                          <td>After effects</td>
+                          <td class="text-success"> 82.00% <i class="ti-arrow-up"></i></td>
+                          <td><label class="badge badge-success">Completed</label></td> -->
+                        </tr>
+                        <tr>
+                          <!-- <td>Dave</td>
+                          <td>53275535</td>
+                          <td class="text-success"> 98.05% <i class="ti-arrow-up"></i></td>
+                          <td><label class="badge badge-warning">In progress</label></td> -->
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: none;" id="m_s" class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Collages Based On Your Marks( {{mar}} ) and Subject {{sub}}</h4>
+                  <p class="card-description">
+                    <code>On Basis Of Marks And Subject</code>
+                  </p>
+                  <div class="table-responsive">
+                    <table id="customers" class="table table-hover">
+                      <thead>
+                        <tr>
+                          {% for header in headings %}
+                          <th>{{header}}</th>
+                          <!-- <th>User</th>
+                          <th>Product</th>
+                          <th>Sale</th>
+                          <th>Status</th> -->
+                          {% endfor %}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for row in marks_sub %}
+                        <tr>
+                          
+                          <td>{{row[0]}}</td>
+                          {% if row[1]>60 %}
+                              <td class="text-success">{{row[1]}}<i class="ti-arrow-up"></i></td>
+                            {% else %}
+                              <td class="text-danger">{{row[1]}}<i class="ti-arrow-down"></i></td>
+                            {% endif %}
+                          <td >{{row[2]}}</td>
+                          <td>{{row[3]}}</td>
+                          
+                            {% if row[4]>2 %}
+                              <td class="text-success">{{row[4]}}<i class="ti-arrow-up"></i></td>
+                            {% else %}
+                              <td class="text-danger">{{row[4]}}<i class="ti-arrow-down"></i></td>
+                            
+                            {% endif %}
+                            <td class="text-success">{{row[5]}}</td>
+                          <!-- <td>Jacob</td>
+                          <td>Photoshop</td>
+                          <td class="text-danger"> 28.76% <i class="ti-arrow-down"></i></td>
+                          <td><label class="badge badge-danger">Pending</label></td> -->
+                          
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                          <!-- <td>Messsy</td>
+                          <td>Flash</td>
+                          <td class="text-danger"> 21.06% <i class="ti-arrow-down"></i></td>
+                          <td><label class="badge badge-warning">In progress</label></td> -->
+                        </tr>
+                        <tr>
+                          <!-- <td>John</td>
+                          <td>Premier</td>
+                          <td class="text-danger"> 35.00% <i class="ti-arrow-down"></i></td>
+                          <td><label class="badge badge-info">Fixed</label></td> -->
+                        </tr>
+                        <tr>
+                          <!-- <td>Peter</td>
+                          <td>After effects</td>
+                          <td class="text-success"> 82.00% <i class="ti-arrow-up"></i></td>
+                          <td><label class="badge badge-success">Completed</label></td> -->
+                        </tr>
+                        <tr>
+                          <!-- <td>Dave</td>
+                          <td>53275535</td>
+                          <td class="text-success"> 98.05% <i class="ti-arrow-up"></i></td>
+                          <td><label class="badge badge-warning">In progress</label></td> -->
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            <!-- </div> -->
+            <!--  -->
+            
+            
+            
+          <!-- </div> -->
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:dashboard/partials/_footer.html -->
+        <!-- <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+          </div>
+        </footer> -->
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="{{ url_for('static', filename='dashboard/vendors/js/vendor.bundle.base.js')}}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="{{ url_for('static', filename='dashboard/js/off-canvas.js')}}"></script>
+  <script src="{{ url_for('static', filename='dashboard/js/hoverable-collapse.js')}}"></script>
+  <script src="{{ url_for('static', filename='dashboard/js/template.js')}}"></script>
+  <script src="{{ url_for('static', filename='dashboard/js/settings.js')}}"></script>
+  <script src="{{ url_for('static', filename='dashboard/js/todolist.js')}}"></script>
+  
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <!-- End custom js for this page-->
+</div>
+
+
+
+
+
+</body>
+<script>
+  const search = () =>{
+      let filter = document.getElementById("navbar-search-input").value;
+      let table =document.getElementById("customers");
+
+      let tr = table.getElementsByTagName('tr');
+
+
+      for(var i=0; i<tr.length; i++){
+          let td = tr[i].getElementsByTagName('td')[0];
+
+          if(td){
+              let val = td.textContent || td.innerHTML;
+
+              if(val.indexOf(filter) > -1){
+                  tr[1].style.display ="";
+
+              }else{
+                  tr[i].style.display ="none";
+
+              }
+          }
+      }
+  }
+</script>
+
+</html>
